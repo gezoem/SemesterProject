@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+public class RestaurantCheckManager {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double totalSales = 0.0;
+        double totalTips = 0.0;
+        int numChecks = 0;
+
+        while (true) {
+            System.out.print("Enter sale amount: ");
+            double cost = scanner.nextDouble();
+
+            System.out.print("Enter tip amount (enter -1 if unknown): ");
+            double tip = scanner.nextDouble();
+
+            System.out.print("Enter total amount (enter -1 if unknown): ");
+            double total = scanner.nextDouble();
+
+            // Edge case handling
+            if (tip == -1 && total != -1) {
+                tip = total - cost;
+                if (tip < 0) tip = 0;
+            } else if (total == -1 && tip != -1) {
+                total = cost + tip;
+            } else if (tip == -1 && total == -1) {
+                tip = 0;
+                total = cost;
+            } else if (total < cost) {
+                total = cost;
+                tip = 0;
+            }
+
+            totalSales += cost;
+            totalTips += tip;
+            numChecks++;
+
+            System.out.print("Do you want to stop? (Y/N): ");
+            String choice = scanner.next();
+            if (choice.equalsIgnoreCase("Y")) break;
+        }
+
+        System.out.printf("Total Sales: $%.2f\n", totalSales);
+        System.out.printf("Total Tips: $%.2f\n", totalTips);
+
+        // Tip Distribution
+        double serverShare = totalTips * 0.80;
+        double kitchenShare = totalTips * 0.10;
+        double hostShare = totalTips * 0.05;
+        double busserShare = totalTips * 0.05;
+
+        // Assuming 2 servers worked
+        double serverPerPerson = serverShare / 2;
+
+        double chefShare = kitchenShare * 0.50;
+        double sousChefShare = kitchenShare * 0.30;
+        double kitchenAidShare = kitchenShare * 0.20;
+
+        System.out.println("\nTip Distribution:");
+        System.out.printf("Each Server: $%.2f\n", serverPerPerson);
+        System.out.printf("Chef: $%.2f\n", chefShare);
+        System.out.printf("Sous-chef: $%.2f\n", sousChefShare);
+        System.out.printf("Kitchen aid: $%.2f\n", kitchenAidShare);
+        System.out.printf("Host/Hostess: $%.2f\n", hostShare);
+        System.out.printf("Busser: $%.2f\n", busserShare);
+    }
+}
