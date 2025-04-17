@@ -44,13 +44,11 @@ public class RestaurantCheckManager {
         System.out.printf("Total Sales: $%.2f\n", totalSales);
         System.out.printf("Total Tips: $%.2f\n", totalTips);
 
-        // Tip Distribution
         double serverShare = totalTips * 0.80;
         double kitchenShare = totalTips * 0.10;
         double hostShare = totalTips * 0.05;
         double busserShare = totalTips * 0.05;
 
-        // Assuming 2 servers worked
         double serverPerPerson = serverShare / 2;
 
         double chefShare = kitchenShare * 0.50;
